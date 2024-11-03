@@ -24,8 +24,8 @@ std::string runNmap(const std::string& ipAddress, const std::string& nmapCommand
 }
 
 // Função para rodar o Amass em um IP ou hostname específico
-std::string runAmass(const std::string& target) {
-    std::string command = "amass enum -d " + target;
+std::string runAmass(const std::string& target, const std::string& amassCommand) {
+    std::string command = "amass " + amassCommand + " -d " + target;
     std::string result;
 
     // Abre um pipe para o comando
@@ -60,21 +60,27 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    // Define o tipo de comando Nmap com base no argumento
+    // Define o tipo de comando Nmap e Amass com base no argumento
     std::string nmapCommand;
+    std::string amassCommand;
     int scanType = std::stoi(argv[2]);  // Converte o argumento para um inteiro
+
     switch (scanType) {
         case 1:
-            nmapCommand = "-sP";  // Scan básico (ping scan)
+            nmapCommand = "-sP";             // Scan básico (ping scan)
+            amassCommand = "enum";            // Enumeração básica de subdomínios com Amass
             break;
         case 2:
-            nmapCommand = "-sV";  // Detecção de versão de serviços
+            nmapCommand = "-sV";             // Detecção de versão de serviços
+            amassCommand = "enum -active";    // Enumeração ativa com Amass (requer que o usuário esteja de acordo)
             break;
         case 3:
-            nmapCommand = "-O";   // Detecção de sistema operacional
+            nmapCommand = "-O";              // Detecção de sistema operacional
+            amassCommand = "intel";           // Amass modo de inteligência para coleta de informações
             break;
         case 4:
-            nmapCommand = "-A";   // Scan agressivo
+            nmapCommand = "-A";              // Scan agressivo
+            amassCommand = "viz -d3";         // Visualização de resultados (avançado) com Amass
             break;
         default:
             std::cerr << "Tipo de scan inválido! Escolha entre 1, 2, 3 ou 4.\n";
@@ -97,9 +103,9 @@ int main(int argc, char* argv[]) {
         }
 
         // Executa o scan Amass
-        std::cout << "Escaneando " << ipAddress << " com o comando Amass...\n";
+        std::cout << "Escaneando " << ipAddress << " com o comando Amass: " << amassCommand << "...\n";
         try {
-            std::string amassResult = runAmass(ipAddress);
+            std::string amassResult = runAmass(ipAddress, amassCommand);
             std::cout << "Resultado do escaneamento Amass para " << ipAddress << ":\n"
                       << amassResult << "\n" << std::endl;
         } catch (const std::exception& e) {
