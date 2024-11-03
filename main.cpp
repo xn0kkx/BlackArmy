@@ -5,9 +5,27 @@
 #include <stdexcept>
 #include <string>
 
-// Função para rodar o Nmap com um comando específico em um IP
+// Função para rodar o Nmap em um IP específico
 std::string runNmap(const std::string& ipAddress, const std::string& nmapCommand) {
     std::string command = "nmap " + nmapCommand + " " + ipAddress;
+    std::string result;
+
+    // Abre um pipe para o comando
+    std::shared_ptr<FILE> pipe(popen(command.c_str(), "r"), pclose);
+    if (!pipe) throw std::runtime_error("Erro ao abrir o pipe!");
+
+    // Lê a saída do comando e armazena em `result`
+    char buffer[128];
+    while (fgets(buffer, sizeof(buffer), pipe.get()) != nullptr) {
+        result += buffer;
+    }
+
+    return result;
+}
+
+// Função para rodar o Amass em um IP ou hostname específico
+std::string runAmass(const std::string& target) {
+    std::string command = "amass enum -d " + target;
     std::string result;
 
     // Abre um pipe para o comando
@@ -63,18 +81,29 @@ int main(int argc, char* argv[]) {
             return 1;
     }
 
-    // Lê e escaneia cada alvo no arquivo
+    // Lê e escaneia cada alvo no arquivo com Nmap e depois com Amass
     std::string ipAddress;
     while (std::getline(alvoFile, ipAddress)) {
         if (ipAddress.empty()) continue;  // Pula linhas vazias
 
-        std::cout << "Escaneando " << ipAddress << " com o comando: " << nmapCommand << "...\n";
+        // Executa o scan Nmap
+        std::cout << "Escaneando " << ipAddress << " com o comando Nmap: " << nmapCommand << "...\n";
         try {
-            std::string scanResult = runNmap(ipAddress, nmapCommand);
+            std::string nmapResult = runNmap(ipAddress, nmapCommand);
             std::cout << "Resultado do escaneamento Nmap para " << ipAddress << ":\n"
-                      << scanResult << "\n" << std::endl;
+                      << nmapResult << "\n" << std::endl;
         } catch (const std::exception& e) {
-            std::cerr << "Erro ao escanear " << ipAddress << ": " << e.what() << std::endl;
+            std::cerr << "Erro ao escanear " << ipAddress << " com Nmap: " << e.what() << std::endl;
+        }
+
+        // Executa o scan Amass
+        std::cout << "Escaneando " << ipAddress << " com o comando Amass...\n";
+        try {
+            std::string amassResult = runAmass(ipAddress);
+            std::cout << "Resultado do escaneamento Amass para " << ipAddress << ":\n"
+                      << amassResult << "\n" << std::endl;
+        } catch (const std::exception& e) {
+            std::cerr << "Erro ao escanear " << ipAddress << " com Amass: " << e.what() << std::endl;
         }
     }
 
