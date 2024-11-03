@@ -1,0 +1,12 @@
+# Nmap 7.94SVN scan initiated Sun Nov  3 18:01:19 2024 as: /usr/lib/nmap/nmap --privileged -sV -v -oN results.txt cyberforcesec.com.br
+Nmap scan report for cyberforcesec.com.br (179.127.149.130)
+Host is up (0.0068s latency).
+rDNS record for 179.127.149.130: 130.149.127.179.in-addr.arpa
+Not shown: 998 filtered tcp ports (no-response)
+PORT    STATE SERVICE  VERSION
+80/tcp  open  http     nginx 1.27.2
+443/tcp open  ssl/http nginx 1.27.2
+
+Read data files from: /usr/share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Sun Nov  3 18:01:36 2024 -- 1 IP address (1 host up) scanned in 17.13 seconds

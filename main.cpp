@@ -6,17 +6,17 @@
 void scanHosts(const std::string& filename, const std::string& scanType, const std::string& outputFile) {
     std::ifstream file(filename);
     if (!file.is_open()) {
-        std::cerr << "Erro ao abrir o arquivo: " << filename << std::endl;
+        std::cerr << "Error opening file: " << filename << std::endl;
         return;
     }
 
     std::string host;
     while (std::getline(file, host)) {
         if (!host.empty()) {
-            // Monta o comando Nmap com o tipo de scan e saída
+            // Build the Nmap command with the scan type and output
             std::string command = "nmap " + scanType + " -v " + host + " -oN " + outputFile;
-            std::cout << "Executando: " << command << std::endl;
-            // Executa o comando
+            std::cout << "Executing: " << command << std::endl;
+            // Execute the command
             std::system(command.c_str());
         }
     }
@@ -26,8 +26,8 @@ void scanHosts(const std::string& filename, const std::string& scanType, const s
 
 int main(int argc, char* argv[]) {
     if (argc != 5) {
-        std::cerr << "Uso: " << argv[0] << " <tipo_de_scan> <arquivo_de_hosts> -o <arquivo_de_saida>" << std::endl;
-        std::cerr << "Tipos de scan: -s (silencioso), -a (agressivo)" << std::endl;
+        std::cerr << "Usage: " << argv[0] << " <scan_type> <hosts_file> -o <output_file>" << std::endl;
+        std::cerr << "Scan types: -s (silent), -a (aggressive), -sv (version)" << std::endl;
         return 1;
     }
 
@@ -36,24 +36,27 @@ int main(int argc, char* argv[]) {
     const std::string outputOption = argv[3];
     const std::string outputFile = argv[4];
 
-    // Verifica se a opção de saída é válida
+    // Check if the output option is valid
     if (outputOption != "-o") {
-        std::cerr << "Opção de saída inválida: " << outputOption << std::endl;
+        std::cerr << "Invalid output option: " << outputOption << std::endl;
         return 1;
     }
 
     std::string nmapScanType;
-    
-    // Verifica se o tipo de scan é válido usando switch
-    switch (scanType[1]) { // verifica o segundo caractere, pois o primeiro é '-'
+
+    // Check if the scan type is valid using switch
+    switch (scanType[1]) { // check the second character, as the first is '-'
         case 's':
-            nmapScanType = "-sS -T2"; // Comando para o tipo de scan silencioso
+            nmapScanType = "-sS -T2"; // Command for silent scan type
             break;
         case 'a':
-            nmapScanType = "-A"; // Comando para o tipo de scan agressivo
+            nmapScanType = "-A"; // Command for aggressive scan type
+            break;
+        case 'v':
+            nmapScanType = "-sV"; // Command for version scan type
             break;
         default:
-            std::cerr << "Tipo de scan inválido: " << scanType << std::endl;
+            std::cerr << "Invalid scan type: " << scanType << std::endl;
             return 1;
     }
 
