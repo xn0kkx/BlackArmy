@@ -7,7 +7,7 @@
 
 // Função para rodar o Nmap em um IP específico
 std::string runNmap(const std::string& ipAddress) {
-    std::string command = "nmap " + ipAddress;
+    std::string command = "nmap -v" + ipAddress;
     std::string result;
 
     // Abre um pipe para o comando
