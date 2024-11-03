@@ -2,10 +2,11 @@
 #include <fstream>
 #include <string>
 #include <cstdlib>
+#include <cstdio>
 
 void runAmass(const std::string& domain, const std::string& outputFile) {
     // Build the Amass command to run
-    std::string command = "amass enum -d " + domain + " -o " + outputFile; // Specify output file
+    std::string command = "amass enum -d " + domain + " -o " + outputFile + " > /dev/null 2>&1"; 
     std::cout << "Executing: " << command << std::endl;
     // Execute the Amass command
     std::system(command.c_str());
@@ -43,6 +44,9 @@ int main(int argc, char* argv[]) {
     const std::string filename = argv[2];
     const std::string outputOption = argv[3];
     const std::string outputFile = argv[4];
+
+    // Remove the output file if it exists to ensure a fresh file each run
+    std::remove(outputFile.c_str());
 
     // Check if the output option is valid
     if (outputOption != "-o") {
