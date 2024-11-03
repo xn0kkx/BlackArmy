@@ -1,6 +1,41 @@
-# Nmap 7.94SVN scan initiated Sun Nov  3 18:01:19 2024 as: /usr/lib/nmap/nmap --privileged -sV -v -oN results.txt cyberforcesec.com.br
+[92mcyberforcesec.com.br[0m[94m (FQDN)[0m [97m-->[0m [95mns_record[0m [97m-->[0m [92madam.flexhost.ws[0m[94m (FQDN)[0m
+[92mcyberforcesec.com.br[0m[94m (FQDN)[0m [97m-->[0m [95mns_record[0m [97m-->[0m [92malice.flexhost.ws[0m[94m (FQDN)[0m
+[92mcyberforcesec.com.br[0m[94m (FQDN)[0m [97m-->[0m [95mmx_record[0m [97m-->[0m [92mx2.wh1.farm15.flexhost.ws[0m[94m (FQDN)[0m
+[92mcyberforcesec.com.br[0m[94m (FQDN)[0m [97m-->[0m [95mmx_record[0m [97m-->[0m [92mwh1.farm15.flexhost.ws[0m[94m (FQDN)[0m
+[92mcyberforcesec.com.br[0m[94m (FQDN)[0m [97m-->[0m [95ma_record[0m [97m-->[0m [92m179.127.149.130[0m[94m (IPAddress)[0m
+[92mcyberforcesec.com.br[0m[94m (FQDN)[0m [97m-->[0m [95mnode[0m [97m-->[0m [92mwww.cyberforcesec.com.br[0m[94m (FQDN)[0m
+[92madam.flexhost.ws[0m[94m (FQDN)[0m [97m-->[0m [95ma_record[0m [97m-->[0m [92m179.127.151.3[0m[94m (IPAddress)[0m
+[92malice.flexhost.ws[0m[94m (FQDN)[0m [97m-->[0m [95ma_record[0m [97m-->[0m [92m179.127.151.2[0m[94m (IPAddress)[0m
+[92mwww.cyberforcesec.com.br[0m[94m (FQDN)[0m [97m-->[0m [95mcname_record[0m [97m-->[0m [92mcyberforcesec.com.br[0m[94m (FQDN)[0m
+[92mx2.wh1.farm15.flexhost.ws[0m[94m (FQDN)[0m [97m-->[0m [95ma_record[0m [97m-->[0m [92m179.127.151.2[0m[94m (IPAddress)[0m
+[92mwh1.farm15.flexhost.ws[0m[94m (FQDN)[0m [97m-->[0m [95ma_record[0m [97m-->[0m [92m179.127.151.3[0m[94m (IPAddress)[0m
+[92m179.127.148.0/22[0m[94m (Netblock)[0m [97m-->[0m [95mcontains[0m [97m-->[0m [92m179.127.149.130[0m[94m (IPAddress)[0m
+[92m179.127.148.0/22[0m[94m (Netblock)[0m [97m-->[0m [95mcontains[0m [97m-->[0m [92m179.127.151.2[0m[94m (IPAddress)[0m
+[92m179.127.148.0/22[0m[94m (Netblock)[0m [97m-->[0m [95mcontains[0m [97m-->[0m [92m179.127.151.3[0m[94m (IPAddress)[0m
+[92m263644[0m[94m (ASN)[0m [97m-->[0m [95mmanaged_by[0m [97m-->[0m [92mFRUGUI TELECOMUNICACOES LTDA[0m[94m (RIROrganization)[0m
+[92m263644[0m[94m (ASN)[0m [97m-->[0m [95mannounces[0m [97m-->[0m [92m179.127.148.0/22[0m[94m (Netblock)[0m
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-11-03 18:29 -03
+NSE: Loaded 46 scripts for scanning.
+Initiating Ping Scan at 18:29
+Scanning cyberforcesec.com.br (179.127.149.130) [4 ports]
+Completed Ping Scan at 18:29, 0.04s elapsed (1 total hosts)
+Initiating Parallel DNS resolution of 1 host. at 18:29
+Completed Parallel DNS resolution of 1 host. at 18:29, 0.00s elapsed
+Initiating SYN Stealth Scan at 18:29
+Scanning cyberforcesec.com.br (179.127.149.130) [1000 ports]
+Discovered open port 80/tcp on 179.127.149.130
+Discovered open port 443/tcp on 179.127.149.130
+Completed SYN Stealth Scan at 18:29, 4.88s elapsed (1000 total ports)
+Initiating Service scan at 18:29
+Scanning 2 services on cyberforcesec.com.br (179.127.149.130)
+Completed Service scan at 18:29, 12.06s elapsed (2 services on 1 host)
+NSE: Script scanning 179.127.149.130.
+Initiating NSE at 18:29
+Completed NSE at 18:29, 0.10s elapsed
+Initiating NSE at 18:29
+Completed NSE at 18:29, 0.08s elapsed
 Nmap scan report for cyberforcesec.com.br (179.127.149.130)
-Host is up (0.0068s latency).
+Host is up (0.0077s latency).
 rDNS record for 179.127.149.130: 130.149.127.179.in-addr.arpa
 Not shown: 998 filtered tcp ports (no-response)
 PORT    STATE SERVICE  VERSION
@@ -9,4 +44,5 @@ PORT    STATE SERVICE  VERSION
 
 Read data files from: /usr/share/nmap
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-# Nmap done at Sun Nov  3 18:01:36 2024 -- 1 IP address (1 host up) scanned in 17.13 seconds
+Nmap done: 1 IP address (1 host up) scanned in 17.42 seconds
+           Raw packets sent: 2004 (88.152KB) | Rcvd: 5 (204B)
