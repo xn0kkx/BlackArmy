@@ -4,10 +4,18 @@
 #include <cstdlib>
 #include <cstdio>
 
+void runGobuster(const std::string& domain, const std::string& wordlist, const std::string& outputFile) {
+    // Build the Gobuster command with wordlist and domain, appending output to file
+    std::string command = "gobuster dns -d " + domain + " -w " + wordlist + " >> " + outputFile + " 2>&1"; // Redirect errors as well
+    std::cout << "Executing Gobuster: " << command << std::endl;
+    // Execute the Gobuster command
+    std::system(command.c_str());
+}
+
 void runAmass(const std::string& domain, const std::string& outputFile) {
     // Build the Amass command to run
-    std::string command = "amass enum -d " + domain + " -o " + outputFile + " > /dev/null 2>&1"; 
-    std::cout << "Executing: " << command << std::endl;
+    std::string command = "amass enum -d " + domain + " -o " + outputFile + " >> " + outputFile + " 2>&1"; // Append to output file
+    std::cout << "Executing Amass: " << command << std::endl;
     // Execute the Amass command
     std::system(command.c_str());
 }
@@ -24,7 +32,7 @@ void scanHosts(const std::string& filename, const std::string& scanType, const s
         if (!host.empty()) {
             // Build the Nmap command with the scan type and append output
             std::string command = "nmap " + scanType + " -v " + host + " >> " + outputFile; // Append output with >>
-            std::cout << "Executing: " << command << std::endl;
+            std::cout << "Executing Nmap: " << command << std::endl;
             // Execute the Nmap command
             std::system(command.c_str());
         }
@@ -34,8 +42,8 @@ void scanHosts(const std::string& filename, const std::string& scanType, const s
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 5) {
-        std::cerr << "Usage: " << argv[0] << " <scan_type> <hosts_file> -o <output_file>" << std::endl;
+    if (argc != 7) {
+        std::cerr << "Usage: " << argv[0] << " <scan_type> <hosts_file> -o <output_file> -w <wordlist>" << std::endl;
         std::cerr << "Scan types: -s (silent), -a (aggressive), -sv (version)" << std::endl;
         return 1;
     }
@@ -44,6 +52,8 @@ int main(int argc, char* argv[]) {
     const std::string filename = argv[2];
     const std::string outputOption = argv[3];
     const std::string outputFile = argv[4];
+    const std::string wordlistOption = argv[5];
+    const std::string wordlist = argv[6];
 
     // Remove the output file if it exists to ensure a fresh file each run
     std::remove(outputFile.c_str());
@@ -51,6 +61,12 @@ int main(int argc, char* argv[]) {
     // Check if the output option is valid
     if (outputOption != "-o") {
         std::cerr << "Invalid output option: " << outputOption << std::endl;
+        return 1;
+    }
+
+    // Check if the wordlist option is valid
+    if (wordlistOption != "-w") {
+        std::cerr << "Invalid wordlist option: " << wordlistOption << std::endl;
         return 1;
     }
 
@@ -72,11 +88,12 @@ int main(int argc, char* argv[]) {
             return 1;
     }
 
-    // Run Amass enumeration before the Nmap scan
+    // Run Gobuster and Amass enumeration before the Nmap scan
     // Read the first line of the hosts file to get the domain
     std::ifstream hostFile(filename);
     std::string domain;
     if (std::getline(hostFile, domain)) {
+        runGobuster(domain, wordlist, outputFile); // Run Gobuster with the domain and wordlist
         runAmass(domain, outputFile); // Run Amass with the domain
     } else {
         std::cerr << "No domain found in the hosts file: " << filename << std::endl;
