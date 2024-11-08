@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <cstdlib>  // Para o sistema de execução de comandos
+#include <cstdlib>  
 
 void show_prompt() {
     std::cout << "BlackArmy> ";
@@ -16,24 +16,46 @@ void print_ascii_art() {
         "\\____/ |_| \\__,_| \\___||_|\\_\\\\_| |_/|_|   |_| |_| |_| \\__, |\n"
         "                                                       __/ | \n"
         "                                                      |___/  \n";
+
+    std::cout <<
+        "                      :::!~!!!!!:.                         \n"
+        "                  .xUHWH!! !!?M88WHX:.                    \n"
+        "                .X*#M@$!!  !X!M$$$$$$WWx:.               \n"
+        "               :!!!!!!?H! :!$!$$$$$$$$$$8X:              \n"
+        "              !!~  ~:~!! :~!$!#$$$$$$$$$$8X:             \n"
+        "             :!~::!H!<   ~.U$X!?R$$$$$$$$MM!             \n"
+        "             ~!~!!!!~~ .:XW$$$U!!?$$$$$$RMM!             \n"
+        "               !:~~~ .:!M\"T#$$$$WX??#MRRMMM!            \n"
+        "               ~?WuxiW*`   `\"#$$$$8!!!!???!!!            \n"
+        "             :X- M$$$$       `\"T#$T~!8$WUXU~           \n"
+        "            :%`  ~#$$$m:        ~!~ ?$$$$$$            \n"
+        "          :!`.-   ~T$$$$8xx.  .xWW- ~\"\"##*\"          \n"
+        ".....   -~~:<` !    ~?T#$$@@W@*?$$      /`           \n"
+        "W$@@M!!! .!~~ !!     .:XUW$W!~ `\"~:    :            \n"
+        "#\"~~`.:x%`!!  !H:   !WM$$$$Ti.: .!WUn+!            \n"
+        ":::~:!!`:X~ .: ?H.!u \"$$$B$$$!W:U!T$$M~          \n"
+        ".~~   :X@!.-~   ?@WTWo(\"*$$$W$TH$!               \n"
+        "Wi.~!X$?!-~    : ?$$$B$Wu(\"**$RM!                \n"
+        "$R@i.~~ !     :   ~$$$$$B$$en:``                \n"
+        "?MXT@Wx.~    :     ~\"##*$$$$M~               \n\n";  
 }
 
 int main() {
     std::string command;
     
-    // Exibe a arte ASCII ao iniciar
+
     print_ascii_art();
     
     while (true) {
         show_prompt();
-        std::getline(std::cin, command);  // Obtém o comando do usuário
+        std::getline(std::cin, command);  
         
         if (command == "exit") {
-            std::cout << "Saindo do terminal...\n";
+            std::cout << "See ya!\n";
             break;
         }
         
-        // Caso o comando não seja "exit", executa como se fosse um comando do shell
+        
         if (!command.empty()) {
             std::system(command.c_str());
         }
