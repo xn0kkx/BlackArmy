@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <unordered_map>
+#include <functional>  
 #include <cstdlib>  
 
 void show_prompt() {
@@ -39,8 +41,26 @@ void print_ascii_art() {
         "$R@i.~~ !     :   ~$$$$$B$$en:``                \n"
         "?MXT@Wx.~    :     ~\"##*$$$$M~               \n\n";  
 }
+void show_help(){
+    std::cout << "Black Army command list:\n";
+    std::cout << "help - Display the command list\n";
+    std::cout << "exit - Close the BlackArmy\n";
+    std::cout << "Clear - Clear the screen\n";
+    std::cout << "help - Display the command list\n";
+    std::cout << "help - Display the command list\n";
+    std::cout << "help - Display the command list\n";
+}
+
+void clear_screen(){
+    std::system("clear");
+}
 
 int main() {
+    std::unordered_map<std::string, std::function<void()>> commands;
+
+    commands["help"] = show_help;
+    commands["clear"] =clear_screen;
+
     std::string command;
     
 
@@ -48,15 +68,18 @@ int main() {
     
     while (true) {
         show_prompt();
-        std::getline(std::cin, command);  
+        if (!std::getline(std::cin, command)){
+            std::cout << std::endl;
+            std::cout << "See ya!";
+            break;
+        } 
         
         if (command == "exit") {
             std::cout << "See ya!\n";
             break;
-        }
-        
-        
-        if (!command.empty()) {
+        } else if (commands.find(command) != commands.end()){
+            commands[command]();
+        } else if (!command.empty()) {
             std::system(command.c_str());
         }
     }
