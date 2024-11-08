@@ -45,7 +45,7 @@ void show_help(){
     std::cout << "Black Army command list:\n";
     std::cout << "help - Display the command list\n";
     std::cout << "exit - Close the BlackArmy\n";
-    std::cout << "Clear - Clear the screen\n";
+    std::cout << "clear - Clear the screen\n";
     std::cout << "help - Display the command list\n";
     std::cout << "help - Display the command list\n";
     std::cout << "help - Display the command list\n";
