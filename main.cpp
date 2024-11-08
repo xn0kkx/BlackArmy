@@ -43,7 +43,6 @@ void print_ascii_art() {
 }
 void show_help(){
     std::cout << "Black Army command list:\n";
-    std::cout << std::endl;
     std::cout << "help - Display the command list\n";
     std::cout << "exit - Close the BlackArmy\n";
     std::cout << "clear - Clear the screen\n";
